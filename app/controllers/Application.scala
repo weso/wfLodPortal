@@ -1,17 +1,17 @@
 package controllers
 
-import play.api._
-import play.api.mvc._
-import es.weso.wfLodPortal.ModelLoader
-import es.weso.wfLodPortal.UriFormatter
 import java.io.ByteArrayOutputStream
 import java.nio.charset.Charset
 import java.nio.charset.CodingErrorAction
-import com.hp.hpl.jena.rdf.model.{ Model => JenaModel }
-import models.ResultQuery
-import es.weso.wfLodPortal.TemplateEgine
+
+import com.hp.hpl.jena.rdf.model.{Model => JenaModel}
 import com.hp.hpl.jena.rdf.model.ModelFactory
-import play.api.data.Form
+
+import es.weso.wfLodPortal.TemplateEgine
+import es.weso.wfLodPortal.sparql._
+import play.api.mvc.Accepting
+import play.api.mvc.Action
+import play.api.mvc.Controller
 
 object Application extends Controller with TemplateEgine {
 
@@ -20,6 +20,7 @@ object Application extends Controller with TemplateEgine {
   val PlainText = Accepting("text/plain")
 
   val N3 = Accepting("text/n3")
+  val RdfN3 = Accepting("text/rdf+n3")
 
   val Turtle = Accepting("text/turtle")
   val XTurtle = Accepting("application/x-turtle")
@@ -45,14 +46,16 @@ object Application extends Controller with TemplateEgine {
       val subjectModel = resultQuery.subject.jenaModel
       val predicateModel = resultQuery.predicate.jenaModel
       val models = List(subjectModel, predicateModel)
-      
+
       request.getQueryString("format") match {
         case Some(format) => downloadAs(uri: String, format, models)
         case None =>
           render {
-            case Html() => renderAsTemplate(resultQuery)
+            case Html() => renderAsTemplate(resultQuery, ModelLoader.fullUri(uri))
             case N3() =>
               renderModelsAs(models, ("N3", "utf-8", N3.mimeType))
+            case RdfN3() =>
+              renderModelsAs(models, ("N3", "utf-8", RdfN3.mimeType))
             case Turtle() =>
               renderModelsAs(models, ("TURTLE", "utf-8", Turtle.mimeType))
             case XTurtle() =>
@@ -69,7 +72,7 @@ object Application extends Controller with TemplateEgine {
       }
   }
 
-  def downloadAs(uri: String, format: String, models:Seq[JenaModel]) = {
+  def downloadAs(uri: String, format: String, models: Seq[JenaModel]) = {
     format match {
       case "n3" =>
         renderModelsAs(models, ("N3", "utf-8", N3.mimeType))
@@ -87,13 +90,12 @@ object Application extends Controller with TemplateEgine {
 
   def renderModelsAs(models: Seq[JenaModel], contentType: (String, String, String)) = {
     val out = new ByteArrayOutputStream
-    val mergedModel = ModelFactory.createDefaultModel
+    val mergedModel: JenaModel = ModelFactory.createDefaultModel
 
     for (model <- models) {
       mergedModel.add(model)
     }
-
-    mergedModel.write(out, contentType._1, contentType._2)
+    mergedModel.write(out, contentType._1)
 
     Ok(out.toString).as {
       (new StringBuilder(contentType._3)).append(" ; charset=")

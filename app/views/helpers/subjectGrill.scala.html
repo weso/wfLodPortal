@@ -1,0 +1,32 @@
+@(rs: es.weso.wfLodPortal.models.ResultQuery)
+
+@import views.html.helpers._
+
+<table class="propertyBox sortable">
+	<thead>
+		<tr>
+			<th class="property">
+				Property
+			</th>
+			<th class="value">
+				Value
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+	@for(n <- rs.subject.list){
+		<tr>
+			<td class="property">
+				@anchor(n.property)
+			</td>
+			<td class="value">
+				<ul>
+				@for(a <- n.nodes){
+					<li>@anchor(a.node)</li>
+				}
+				</ul>
+			</td>
+		</tr>
+	}
+	</tbody>
+</table>
