@@ -55,6 +55,12 @@ trait TemplateEgine extends Controller with Configurable {
   	Ok(views.html.home(version))
   }
   
+  def renderRoot(mode: String, host:String) = {
+  	val version = this.conf.getString("application.version")
+  	val title = if (mode == "odb") "OPEN DATA BAROMETER"; else "WEB INDEX"
+  	Ok(views.html.root(version, mode, title))
+  }
+  
   def renderPreCompare(mode: String, selectedCountries: Option[String], selectedIndicators: Option[String], host: String) = {
     import es.weso.wfLodPortal.sparql.custom.RegionCustomQueries._
     import es.weso.wfLodPortal.sparql.custom.SubindexCustomQuery._

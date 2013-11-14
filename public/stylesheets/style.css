@@ -139,11 +139,85 @@ div.sparql button {
 }
 
 footer {
-	background-color: #222;
-	color: #fff;
-	padding: 0.5em 1em;
+	overflow: auto;
 	margin-top: 1em;
+	background-color: #EEAA11;
 	font-size: 0.9em;
+}
+
+footer div.quarter {
+	width: 20%;
+	float: left;
+	min-height: 9em;
+	padding: 1em 0;
+	color: #fff;
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
+footer div.first {
+	background-color: #222;
+}
+
+footer div.second {
+	background-color: #116699;
+}
+
+footer div.third {
+	background-color: #88CC22;
+}
+
+footer div.forth {
+	background-color: #CC2222;
+}
+
+footer div.fifth {
+	background-color: #EEAA11;
+	text-align: center;
+}
+
+footer div.fifth a.valid {
+	display: inline-block;
+	font-size: 0.8em;
+	width: 3.4em;
+	height: 2.4em;
+	padding-top: 1em;
+	border-radius: 1.8em;
+	border: 0.1em solid #fff;
+	color: #fff;
+	margin: 0.2em 1em;
+	text-decoration: none;
+}
+
+footer div.fifth img {
+	display: block;
+	margin: 0.4em auto 0.4em auto;
+}
+
+footer div.footer {
+	clear: both;
+	background-color: #111;
+	color: #fff;
+	padding: 0.8em 1em 0.8em 2em;
+	font-size: 0.8em;
+}
+
+footer ul {
+	margin-top: 0.5em;
+	padding-left: 2em;
+}
+
+footer li {
+	list-style: none;
+	margin-bottom: 0.4em;
+}
+
+footer div.quarter a {
+	text-decoration: none;
+	color: #fff;
+}
+
+footer div.quarter li a.title {
+	font-weight: bold;
 }
 
 /* Help */
@@ -861,12 +935,14 @@ h1.main {
 }
 
 p.main {
-	font-size: 1.3em;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: 1.5em;
 	color: #888;
 	font-style: italic;
-	font-weight: 200;
+	font-weight: 400;
 	margin-top: 1.5em;
 	margin-bottom: 2em;
+	margin-left: 2%;
 }
 
 div.repository a {
@@ -892,4 +968,25 @@ div.repository p {
 	font-style: italic;
 	color: #666;
 	text-align: justify;
+}
+
+div.repository a.button {
+	margin: 0.5em auto;
+	display: block;
+	text-decoration: none;
+	text-align: center;
+	font-size: 1.1em;
+	text-transform: uppercase;
+	background-color: #333;
+	color: #fff;
+	font-weight: 100;
+	letter-spacing: 0.2em;
+	font-family: "Century Gothic", Arial;
+	border: none;
+	padding: 0.3em;
+	min-width: 10.2em;
+}
+
+div.repository a.button:hover {
+	background-color: #555;
 }

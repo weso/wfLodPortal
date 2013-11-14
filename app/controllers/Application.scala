@@ -84,12 +84,10 @@ object Application extends Controller with TemplateEgine {
 	  }
   }
   
-  def webindex(version: String) = Action {
-    Ok(views.html.webindex())
-  }
-  
-  def odb(version: String) = Action {
-    Ok(views.html.odb())
+  def root(mode: String, version: String) = Action {
+  	request => {
+    	renderRoot(mode, request.host)
+    }
   }
 
   protected def downloadAs(uri: String, format: String, models: Seq[JenaModel]) = {

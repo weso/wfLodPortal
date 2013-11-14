@@ -1,0 +1,10 @@
+@(version: String, mode: String, title: String)
+
+@breadcrumb = @{ if (mode == "odb") "ODB"; else "WEB INDEX" }
+
+@main(None, "") {
+	<nav class="breadcrumbs">
+		@breadcrumb
+	</nav>
+	<h1 class="main">@title</h1>
+}
