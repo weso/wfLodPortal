@@ -34,20 +34,36 @@ class WebpageSteps extends ScalaDsl with EN with Matchers with Firefox {
     pageTitle should be(expected)
   }
 
-  When("""^I click the link with xpath "([^"]*)"$""") { (path: String) =>
+  When("""^I click the link with xpath "(.*?)"$""") { (path: String) =>
     val element: Option[Element] = find(xpath(path))
     element match {
       case Some(e) => click on (e)
       case _ => throw new NoSuchElementException
     }
   }
-  Then("""^the text in the element with xpath "([^"]*)" should be "([^"]*)"$"""){ (path:String, expected:String) =>
-  //// Express the Regexp above with the code you wish you had
-    val element: Option[Element] = find(xpath(path))
+  
+  When("""^I click the link with id "(.*?)"$""") { (id: String) =>
+    val element: Option[Element] = find(id)
     element match {
-      case Some(e) => e.text should be (expected)
+      case Some(e) => click on (e)
       case _ => throw new NoSuchElementException
     }
-}
+  }
+  
+  Then("""^the text in the element with xpath "([^"]*)" should be "([^"]*)"$""") { (path: String, expected: String) =>
+    //// Express the Regexp above with the code you wish you had
+    val element: Option[Element] = find(xpath(path))
+    element match {
+      case Some(e) => e.text should be(expected)
+      case _ => throw new NoSuchElementException
+    }
+  }
+  Then("""^there should be an element with id "([^"]*)"$""") { (elem: String) =>
+    val element = find(id(elem))
+    element match {
+      case Some(e) => true
+      case _ => throw new NoSuchElementException
+    }
+  }
 
 }
