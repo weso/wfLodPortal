@@ -12,57 +12,48 @@
 
 @image = @{ 
 	val code = handleResourceAsString(rs.subject.get, 
-		wfOnto, "ref-area", 
-		{r:RdfResource => iso2(r.dataStores)})
-	
-	val img = code.toLowerCase + ".png" 
-			
+		wfOnto, "ref-area", {r:RdfResource => iso2(r.dataStores)})
+	val img = code.toLowerCase + ".png" 		
 	routes.Assets.at("images/flags/" + img)
 }
 
 @countryName = @{
 	handleResourceAsString(rs.subject.get, 
-		wfOnto, "ref-area", 
-		(r:RdfResource)=> cachedLabel(r))
+		wfOnto, "ref-area", (r:RdfResource)=> cachedLabel(r))
 }
 
 @countryURI = @{
 	handleResourceAsString(rs.subject.get, 
-		wfOnto, "ref-area", 
-		(r:RdfResource)=>r.uri.relative.toString)
+		wfOnto, "ref-area", (r:RdfResource)=>r.uri.relative.toString)
 }
 
 @indicatorURI = @{
 	handleResourceAsString(rs.subject.get, 
-		cex, "indicator", 
-		(r:RdfResource)=> {println(r)
-		null})
-	handleResourceAsString(rs.subject.get, 
-		cex, "indicator", 
-		(r:RdfResource)=>r.uri.relative.toString)
+		cex, "indicator", (r:RdfResource)=>r.uri.relative.toString)
 }
 
 @indicatorName = @{
 	val str = handleResourceAsString(rs.subject.get, 
-		cex, "indicator", 
-		(r:RdfResource)=>r.uri.short.get.suffix._2.replace("_", " "))
-	
+		cex, "indicator", (r:RdfResource)=> {
+			val index = math.max(r.uri.absolute.lastIndexOf("#"), 
+				r.uri.absolute.lastIndexOf("/")) + 1
+			val suffix = r.uri.absolute.substring(index)
+			suffix.replace("_", " ")
+	})
 	if (str.length > 8) {
 		str.substring(0, 8).trim() + "..."
-	}
-	else str
+	} else str
 }
 
 @indicatorDescription = @{
 	handleResourceAsString(rs.subject.get, 
-		cex, "indicator", 
-		(r:RdfResource)=> cachedLabel(r))
+		cex, "indicator", (r:RdfResource)=> cachedLabel(r))
 }
 
 @value = @{
-	handleLiteralAs[BigDecimal](rs.subject.get,		
-		cex, "value", 
-		(l:RdfLiteral)=>BigDecimal(l.value).setScale(2, BigDecimal.RoundingMode.HALF_UP))
+	handleLiteralAs[BigDecimal](rs.subject.get,	cex, "value", 
+		(l:RdfLiteral)=>
+			BigDecimal(l.value).setScale(2, BigDecimal.RoundingMode.HALF_UP))
 }
 
 @year = @{
