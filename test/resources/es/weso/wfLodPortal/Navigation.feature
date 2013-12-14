@@ -50,3 +50,50 @@ Feature: Navigation
 		When I click the "second" breadcrumb
 		Then the url should be "/webindex/v2013"
 		
+	Scenario: Validate the odb transitions
+		Given I want to load the "home" page
+		When I click the button with class "odb"
+		Then the text in the element "h1" should be "OPEN DATA BAROMETER"
+		And the url should be "/odb/v2013"
+		And the "first" breadcrumb text should be "DATA"
+		
+		Given I want to load the "/odb/v2013" page
+		When I click the "first" breadcrumb
+		Then the url should be "/"
+		
+		Given I want to load the "/odb/v2013" page
+		When I click the button with class "compare"
+		Then the url should be "/odb/compare"
+		And the "first" breadcrumb text should be "DATA"
+		And the "second" breadcrumb text should be "ODB"
+		
+		Given I want to load the "/odb/compare" page
+		When I click the button with class "compare"
+		Then the url should be "/odb/compare"
+		And the "first" breadcrumb text should be "DATA"
+		And the "second" breadcrumb text should be "ODB"
+		
+		Given I want to load the "/odb/compare" page
+		When I click the "first" breadcrumb
+		Then the url should be "/"
+		
+		Given I want to load the "/odb/compare" page
+		When I click the "second" breadcrumb
+		Then the url should be "/odb/v2013"
+		
+		Given I want to load the "/odb/compare" page
+		When I click the button with id "compareButton"
+		Then the url should be "/odb/compare/COUNTRY(ALL)/YEAR(ALL)/INDICATOR(ALL)?"
+		
+		Given I want to load the "/odb/compare/COUNTRY(ALL)/YEAR(ALL)/INDICATOR(ALL)?" page
+		When I click the button with class "compare"
+		Then the url should be "/odb/compare"
+		
+		Given I want to load the "/odb/compare/COUNTRY(ALL)/YEAR(ALL)/INDICATOR(ALL)?" page
+		When I click the "first" breadcrumb
+		Then the url should be "/"
+		
+		Given I want to load the "/odb/compare/COUNTRY(ALL)/YEAR(ALL)/INDICATOR(ALL)?" page
+		When I click the "second" breadcrumb
+		Then the url should be "/odb/v2013"
+		

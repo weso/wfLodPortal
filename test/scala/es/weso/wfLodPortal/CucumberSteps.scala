@@ -1,15 +1,17 @@
 package scala.es.weso.wfLodPortal
 
+import scala.es.weso.wfLodPortal.utils.SeleniumUtils
+
 import org.scalatest.Matchers
 import org.scalatest.selenium.Firefox
+
 import cucumber.api.scala.EN
 import cucumber.api.scala.ScalaDsl
-import javax.naming.directory.NoSuchAttributeException
 
 class CucumberSteps extends ScalaDsl with EN with Matchers with Firefox {
 
-//  val host = "http://data.webfoundation.org"
-  val host = "http://localhost:9000"
+  val host = "http://data.webfoundation.org"
+  //  val host = "http://localhost:9000"
 
   Given("""^I want to load the "([^"]*)" page$""") { (page: String) =>
     page match {
@@ -46,40 +48,38 @@ class CucumberSteps extends ScalaDsl with EN with Matchers with Firefox {
   }
 
   When("""^I click the link with xpath "(.*?)"$""") { (path: String) =>
-    val element: Option[Element] = find(xpath(path))
-    clickOn(element)
+    SeleniumUtils.clickOn(SeleniumUtils.findByXpath(path))
   }
 
   When("""^I click the link with id "(.*?)"$""") { (id: String) =>
-    val element: Option[Element] = find(id)
-    clickOn(element)
+    SeleniumUtils.clickOn(SeleniumUtils.findById(id))
   }
 
   When("""^I click the "([^"]*)" breadcrumb$""") { (order: String) =>
-    clickOn(getBreadrcumb(order))
+    SeleniumUtils.clickOn(getBreadrcumb(order))
   }
   When("""^I click the button with id "([^"]*)"$""") { (buttonId: String) =>
-    clickOn(find(id(buttonId)))
+    SeleniumUtils.clickOn(SeleniumUtils.findById(buttonId))
   }
 
   Then("""^the text in the element with xpath "([^"]*)" should be "([^"]*)"$""") { (path: String, expected: String) =>
-    val element: Option[Element] = find(xpath(path))
-    checkText(element, expected)
+    val element = SeleniumUtils.findByXpath(path)
+    SeleniumUtils.checkText(element, expected)
   }
   Then("""^there should be an element with id "([^"]*)"$""") { (elem: String) =>
-    val element = find(id(elem))
-    checkExists(element)
+    val element = SeleniumUtils.findById(elem)
+    SeleniumUtils.checkExists(element)
   }
 
   Then("""^the "([^"]*)" breadcrumb text should be "([^"]*)"$""") { (order: String, expected: String) =>
     val element = getBreadrcumb(order);
-    checkText(element, expected)
+    SeleniumUtils.checkText(element, expected)
   }
 
   Then("""^the text in the element "([^"]*)" should be "([^"]*)"$""") {
     (elem: String, expected: String) =>
-      val element: Option[Element] = find(tagName(elem))
-      checkText(element, expected.replace("_", " "))
+      val element = SeleniumUtils.findByTagName(elem)
+      SeleniumUtils.checkText(element, expected.replace("_", " "))
   }
 
   Then("""^the page title should be "([^"]*)"$""") { (expected: String) =>
@@ -88,52 +88,21 @@ class CucumberSteps extends ScalaDsl with EN with Matchers with Firefox {
 
   Then("""^the "([^"]*)" breadcrumb href should be "([^"]*)"$""") { (order: String, expected: String) =>
     val element = getBreadrcumb(order);
-    element match {
-      case Some(e) => e.attribute("href") match {
-        case Some(h) => h should be(host + expected)
-        case _ => throw new NoSuchAttributeException
-      }
-      case _ => throw new NoSuchElementException
-    }
+    SeleniumUtils.checkHref(element, expected)
   }
   Then("""^the "([^"]*)" button href should be "([^"]*)"$""") { (btnClass: String, expected: String) =>
-    val element = find(className(btnClass))
-    element match {
-      case Some(e) => e.attribute("href") match {
-        case Some(h) => h should be(host + expected)
-        case _ => throw new NoSuchAttributeException
-      }
-      case _ => throw new NoSuchElementException
-    }
+    val element = SeleniumUtils.findByClassName(btnClass)
+    SeleniumUtils.checkHref(element, expected)
   }
 
   Then("""^the url should be "([^"]*)"$""") { (subUrl: String) =>
-    currentUrl should be (host + subUrl)
+    currentUrl should be(host + subUrl)
   }
 
   def getBreadrcumb(order: String) = order match {
-    case "first" => find(xpath("/html/body/div[1]/div/nav/a[" + 1 + "]"))
-    case "second" => find(xpath("/html/body/div[1]/div/nav/a[" + 2 + "]"))
-    case "third" => find(xpath("/html/body/div[1]/div/nav/a[" + 3 + "]"))
-  }
-
-  def applyElement(elem: Option[Element], f: Element => Unit) {
-    elem match {
-      case Some(e) => f(e)
-      case _ => throw new NoSuchElementException
-    }
-  }
-
-  def clickOn(elem: Option[Element]) {
-    applyElement(elem, x => click on (x))
-  }
-
-  def checkText(elem: Option[Element], expected: String) {
-    applyElement(elem, x => x.text should be(expected))
-  }
-
-  def checkExists(elem: Option[Element]) {
-    applyElement(elem, x => {})
+    case "first" => SeleniumUtils.findByXpath("/html/body/div[1]/div/nav/a[" + 1 + "]")
+    case "second" => SeleniumUtils.findByXpath("/html/body/div[1]/div/nav/a[" + 2 + "]")
+    case "third" => SeleniumUtils.findByXpath("/html/body/div[1]/div/nav/a[" + 3 + "]")
   }
 
 }
