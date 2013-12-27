@@ -7,11 +7,6 @@ Feature: Comparer
     Given I want to load the "home" page
     When I click the button with class "webindex"
     And I click the button with class "compare"
-    And I click the link with xpath "//*[@id="countrySelector"]/ul[2]/li[1]/a/div[1]"
-    And I click the link with xpath "//*[@id="countrySelector"]/ul[2]/li[1]/ul/li[1]/a"
-    And I click the link with xpath "//*[@id="countrySelector"]/ul[2]/li[1]/ul/li[2]/a"
-    And I click the link with xpath "//*[@id="indicatorSelector"]/ul[2]/li[2]/a"
-    And I click the link with xpath "//*[@id="yearSelector"]/ul[2]/li[7]/a"
     And I click the link with id "compareButton"
     Then there should be an element with id "graphs"
 

@@ -8,15 +8,15 @@ import org.scalatest.selenium.Firefox
 import cucumber.api.scala.EN
 import cucumber.api.scala.ScalaDsl
 
-class CucumberSteps extends ScalaDsl with EN with Matchers with Firefox {
+class CucumberSteps extends ScalaDsl with EN with Matchers {
 
   val host = "http://data.webfoundation.org"
   //  val host = "http://localhost:9000"
 
   Given("""^I want to load the "([^"]*)" page$""") { (page: String) =>
     page match {
-      case "home" => go to (host + "/")
-      case other => go to (host + other)
+      case "home" => SeleniumUtils.loadPage(host + "/")
+      case other => SeleniumUtils.loadPage(host + other)
     }
   }
 
@@ -31,7 +31,7 @@ class CucumberSteps extends ScalaDsl with EN with Matchers with Firefox {
       val iSubUrl = "/INDICATOR(" + indicator + ")"
       val url = baseUrl + cSubUrl + ySubUrl + iSubUrl
 
-      go to (host + url)
+      SeleniumUtils.loadPage(host + url)
   }
 
   Given("""^I want to load the "([^"]*)" contry page from "([^"]*)"$""") { (repo: String, country: String) =>
@@ -40,11 +40,12 @@ class CucumberSteps extends ScalaDsl with EN with Matchers with Firefox {
       case "odb" => "/odb/v2013/country/"
     }
     val url = host + baseUrl + country
-    go to (url)
+    SeleniumUtils.loadPage(url)
   }
 
-  When("""^I click the button with class "([^"]*)"$""") {
-    (buttonClassName: String) => click on className(buttonClassName)
+  When("""^I click the button with class "([^"]*)"$""") { (buttonClassName: String) =>
+      SeleniumUtils.clickOn(SeleniumUtils.findByClassName(buttonClassName))
+    
   }
 
   When("""^I click the link with xpath "(.*?)"$""") { (path: String) =>
@@ -83,20 +84,20 @@ class CucumberSteps extends ScalaDsl with EN with Matchers with Firefox {
   }
 
   Then("""^the page title should be "([^"]*)"$""") { (expected: String) =>
-    pageTitle should be(expected)
+    SeleniumUtils.checkPageTitle(expected)
   }
 
   Then("""^the "([^"]*)" breadcrumb href should be "([^"]*)"$""") { (order: String, expected: String) =>
     val element = getBreadrcumb(order);
-    SeleniumUtils.checkHref(element, expected)
+    SeleniumUtils.checkHref(element, host + expected)
   }
   Then("""^the "([^"]*)" button href should be "([^"]*)"$""") { (btnClass: String, expected: String) =>
     val element = SeleniumUtils.findByClassName(btnClass)
-    SeleniumUtils.checkHref(element, expected)
+    SeleniumUtils.checkHref(element, host + expected)
   }
 
   Then("""^the url should be "([^"]*)"$""") { (subUrl: String) =>
-    currentUrl should be(host + subUrl)
+    SeleniumUtils.checkCurrentUrl(host + subUrl)
   }
 
   def getBreadrcumb(order: String) = order match {

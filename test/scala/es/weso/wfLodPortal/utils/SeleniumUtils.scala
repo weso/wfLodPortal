@@ -40,6 +40,14 @@ object SeleniumUtils extends Matchers with Firefox {
     applyAttribute(elem, "href", x => x should be(expected))
   }
   
+  def checkPageTitle(expected: String) {
+    pageTitle should be(expected)
+  }
+  
+  def checkCurrentUrl(expected: String) {
+    currentUrl should be(expected)
+  }
+  
   def findById(reqId: String) = find(id(reqId))
 
   def findByXpath(reqXpath: String) = find(xpath(reqXpath))
@@ -47,5 +55,7 @@ object SeleniumUtils extends Matchers with Firefox {
   def findByClassName(reqClass: String) = find(className(reqClass))
 
   def findByTagName(reqTag: String) = find(tagName(reqTag))
+  
+  def loadPage(url: String) = go to (url)
 
 }
