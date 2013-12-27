@@ -1,10 +1,8 @@
 package scala.es.weso.wfLodPortal
 
 import scala.es.weso.wfLodPortal.utils.SeleniumUtils
-
 import org.scalatest.Matchers
 import org.scalatest.selenium.Firefox
-
 import cucumber.api.scala.EN
 import cucumber.api.scala.ScalaDsl
 
