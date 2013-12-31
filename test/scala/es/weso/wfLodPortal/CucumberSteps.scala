@@ -1,8 +1,9 @@
 package scala.es.weso.wfLodPortal
 
 import scala.es.weso.wfLodPortal.utils.SeleniumUtils
+
 import org.scalatest.Matchers
-import org.scalatest.selenium.Firefox
+
 import cucumber.api.scala.EN
 import cucumber.api.scala.ScalaDsl
 
@@ -65,8 +66,19 @@ class CucumberSteps extends ScalaDsl with EN with Matchers {
     val element = SeleniumUtils.findByXpath(path)
     SeleniumUtils.checkText(element, expected)
   }
+  
+  Then("""^the href in the element with xpath "(.*?)" should be "([^"]*)"$""") { (path: String, expected: String) =>
+    val element = SeleniumUtils.findByXpath(path)
+    SeleniumUtils.checkHref(element, expected)
+  }
+  
   Then("""^there should be an element with id "([^"]*)"$""") { (elem: String) =>
     val element = SeleniumUtils.findById(elem)
+    SeleniumUtils.checkExists(element)
+  }
+  
+  Then("""^there should be an element with class "([^"]*)"$""") { (elem: String) =>
+    val element = SeleniumUtils.findByClassName(elem)
     SeleniumUtils.checkExists(element)
   }
 
@@ -92,6 +104,11 @@ class CucumberSteps extends ScalaDsl with EN with Matchers {
   Then("""^the "([^"]*)" button href should be "([^"]*)"$""") { (btnClass: String, expected: String) =>
     val element = SeleniumUtils.findByClassName(btnClass)
     SeleniumUtils.checkHref(element, host + expected)
+  }
+  
+  Then("""^the "([^"]*)" element "([^"]*)" attribute should be "([^"]*)"$""") { (elemId: String, attr: String, expected: String) =>
+    val element = SeleniumUtils.findById(elemId)
+    SeleniumUtils.checkStyle(element, expected)
   }
 
   Then("""^the url should be "([^"]*)"$""") { (subUrl: String) =>

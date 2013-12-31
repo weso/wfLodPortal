@@ -4,6 +4,9 @@ import org.scalatest.Matchers
 import javax.naming.directory.NoSuchAttributeException
 import org.scalatest.selenium.Firefox
 import org.scalatest.selenium.WebBrowser.Element
+import org.scalatest.selenium.HtmlUnit
+import org.scalatest.selenium.InternetExplorer
+import org.scalatest.selenium.Chrome
 
 object SeleniumUtils extends Matchers with Firefox {
 
@@ -46,6 +49,10 @@ object SeleniumUtils extends Matchers with Firefox {
   
   def checkCurrentUrl(expected: String) {
     currentUrl should be(expected)
+  }
+  
+  def checkStyle(elem: Option[Element], expected: String) {
+    applyAttribute(elem, "style", x => x should be(expected))
   }
   
   def findById(reqId: String) = find(id(reqId))
