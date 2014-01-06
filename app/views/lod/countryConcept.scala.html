@@ -1,12 +1,4 @@
-@(rs: es.weso.wfLodPortal.models.ResultQuery)(implicit request: RequestHeader, options: es.weso.wfLodPortal.models.Options)
-
-@import es.weso.wfLodPortal.models._
-@import es.weso.wfLodPortal.sparql.Handlers._
-@import es.weso.wfLodPortal.utils.CommonURIS._
-
-@import views.html.helpers._
-@import views.helpers.Utils._
-@import views.helpers.wf.Utils._
+@(rs: ResultQuery)(implicit request: RequestHeader, options: Options)
 
 @loadCountries(repository:String) = @{ 
   var countries = scala.collection.mutable.Map[String,Tuple2[String, String]]()

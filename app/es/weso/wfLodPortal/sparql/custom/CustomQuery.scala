@@ -1,7 +1,6 @@
 package es.weso.wfLodPortal.sparql.custom
 
-import es.weso.wfLodPortal.Configurable
-import play.api.Logger
+import es.weso.wesby.Configurable
 
 trait CustomQuery extends Configurable {
 

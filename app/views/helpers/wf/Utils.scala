@@ -1,18 +1,18 @@
 package views.helpers.wf
 
 import scala.collection._
-import es.weso.wfLodPortal.Configurable
-import es.weso.wfLodPortal.models._
-import es.weso.wfLodPortal.models._
-import es.weso.wfLodPortal.sparql.Handlers._
+import es.weso.wesby.Configurable
+import es.weso.wesby.models._
+import es.weso.wesby.models._
+import es.weso.wesby.sparql.Handlers._
 import es.weso.wfLodPortal.sparql.custom.IndexValueCustomQuery.Index
-import es.weso.wfLodPortal.utils.CommonURIS._
+import es.weso.wesby.utils.CommonURIS._
 import play.api.cache.Cache
 import play.api.Play.current
 import views.helpers.Utils.label
+import es.weso.wfLodPortal.sparql.custom.ObservationCustomQuery
 import es.weso.wfLodPortal.sparql.custom.IndexValueCustomQuery
 import es.weso.wfLodPortal.sparql.custom.RankingCustomQuery
-import es.weso.wfLodPortal.sparql.custom.ObservationCustomQuery
 
 object Utils extends Configurable {
 

@@ -3,15 +3,15 @@ package es.weso.wfLodPortal.sparql.custom
 import scala.Option.option2Iterable
 import scala.collection.mutable.ListBuffer
 
-import es.weso.wfLodPortal.Configurable
-import es.weso.wfLodPortal.models.Model
-import es.weso.wfLodPortal.models.RdfResource
-import es.weso.wfLodPortal.sparql.Handlers.handleFirstLiteralAsValue
-import es.weso.wfLodPortal.sparql.Handlers.handleResourceAs
-import es.weso.wfLodPortal.sparql.ModelLoader
-import es.weso.wfLodPortal.utils.CommonURIS.cex
-import es.weso.wfLodPortal.utils.CommonURIS.rdf
-import es.weso.wfLodPortal.utils.CommonURIS.time
+import es.weso.wesby.Configurable
+import es.weso.wesby.models.Model
+import es.weso.wesby.models.RdfResource
+import es.weso.wesby.sparql.Handlers.handleFirstLiteralAsValue
+import es.weso.wesby.sparql.Handlers.handleResourceAs
+import es.weso.wesby.sparql.ModelLoader
+import es.weso.wesby.utils.CommonURIS.cex
+import es.weso.wesby.utils.CommonURIS.rdf
+import es.weso.wesby.utils.CommonURIS.time
 
 object YearsCustomQuery extends CustomQuery with Configurable {
 

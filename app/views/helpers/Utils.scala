@@ -1,17 +1,17 @@
 package views.helpers
 
-import es.weso.wfLodPortal.models.RdfLiteral
-import es.weso.wfLodPortal.models.RdfNode
-import es.weso.wfLodPortal.models.RdfResource
-import es.weso.wfLodPortal.models.ResultQuery
-import es.weso.wfLodPortal.sparql.Handlers._
-import es.weso.wfLodPortal.utils.CommonURIS.rdf
-import es.weso.wfLodPortal.utils.CommonURIS.rdfs
-import es.weso.wfLodPortal.utils.CommonURIS.wfOnto
+import es.weso.wesby.models.RdfLiteral
+import es.weso.wesby.models.RdfNode
+import es.weso.wesby.models.RdfResource
+import es.weso.wesby.models.ResultQuery
+import es.weso.wesby.sparql.Handlers._
+import es.weso.wesby.utils.CommonURIS.rdf
+import es.weso.wesby.utils.CommonURIS.rdfs
+import es.weso.wesby.utils.CommonURIS.wfOnto
 import play.api.templates.Html
 import views.helpers.wf.Utils.cachedLabel
-import es.weso.wfLodPortal.models.DataStore
-import es.weso.wfLodPortal.models.DataStore
+import es.weso.wesby.models.DataStore
+import es.weso.wesby.models.DataStore
 
 object Utils {
 

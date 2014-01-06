@@ -1,6 +1,8 @@
 package controllers
 
-import es.weso.wfLodPortal.TemplateEgine
+import org.apache.commons.configuration.PropertiesConfiguration
+
+import es.weso.wesby.Configurable
 import es.weso.wfLodPortal.sparql.custom.IndicatorCustomQuery
 import es.weso.wfLodPortal.sparql.custom.IndicatorCustomQuery.Indicator
 import es.weso.wfLodPortal.sparql.custom.IndicatorCustomQuery.indicatorWrites
@@ -16,20 +18,26 @@ import play.api.libs.json.Json
 import play.api.mvc.Action
 import play.api.mvc.Controller
 
-object WebFoundation extends Controller with TemplateEgine {
+object WebFoundation extends Controller with Configurable {
 
+  conf.append(new PropertiesConfiguration("conf/wesby/comparer.properties"))
+  
+  val currentVersion = conf.getString("application.version")
+  
   def preCompare(mode: String, selectedCountries: Option[String] = None,
     selectedIndicators: Option[String] = None) = Action { implicit request =>
-    
+
     val maxCountries = conf.getString("comparer.max.countries")
     val maxIndicators = conf.getString("comparer.max.indicators")
     val maxYears = conf.getString("comparer.max.years")
-    
+
     val regions = Json.toJson[List[Region]](loadRegions(mode, currentVersion))
     val years = Json.toJson[List[Int]](loadYears(mode, currentVersion))
     val subindexes = Json.toJson[List[Subindex]](loadSubindexes(mode, currentVersion))
 
-    Ok(views.html.custom.compare(currentVersion, mode)(request, regions, years, subindexes, selectedCountries, selectedIndicators, maxCountries, maxIndicators, maxYears))
+    Ok(views.html.custom.compare(currentVersion, mode)(request, regions,
+      years, subindexes, selectedCountries, selectedIndicators,
+      maxCountries, maxIndicators, maxYears))
 
   }
 

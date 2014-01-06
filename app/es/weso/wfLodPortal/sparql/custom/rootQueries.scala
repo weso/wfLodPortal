@@ -1,18 +1,6 @@
 package es.weso.wfLodPortal.sparql.custom
 
-import scala.Array.canBuildFrom
-import scala.collection.mutable.HashMap
-import scala.collection.mutable.ListBuffer
-import scala.collection.mutable.{ Map => MutableMap }
-import com.hp.hpl.jena.query.QuerySolution
-import es.weso.wfLodPortal.Configurable
-import es.weso.wfLodPortal.sparql.QueryEngine
-import play.api.libs.functional.syntax.functionalCanBuildApplicative
-import play.api.libs.functional.syntax.toFunctionalBuilderOps
-import play.api.libs.functional.syntax.unlift
-import es.weso.wfLodPortal.utils._
-import es.weso.wfLodPortal.utils.UriFormatter._
-import es.weso.wfLodPortal.models.Uri
+import es.weso.wesby.Configurable
 
 object RootQueries extends CustomQuery with Configurable {
 
