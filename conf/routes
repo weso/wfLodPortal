@@ -6,14 +6,7 @@
 GET    /                                                                           controllers.Application.index
 HEAD   /                                                                           controllers.Application.index
 
-# Map static resources from the /public folder to the /assets URL path
-
-GET    /favicon.ico                                                                controllers.Assets.at(path="/public", file="favicon.ico")
-HEAD   /favicon.ico                                                                controllers.Assets.at(path="/public", file="favicon.ico")
-
-GET    /assets/*file                                                               controllers.Assets.at(path="/public", file)
-HEAD   /assets/*file                                                               controllers.Assets.at(path="/public", file)
-
+# Map your custom app routes
 GET    /webindex/compare                                                           controllers.WebFoundation.preCompare(mode="webindex", selectedCountries: Option[String], selectedIndicators: Option[String])
 HEAD   /webindex/compare                                                           controllers.WebFoundation.preCompare(mode="webindex", selectedCountries: Option[String], selectedIndicators: Option[String])
 
@@ -35,8 +28,18 @@ HEAD   /webindex/:version                                                       
 GET    /odb/:version                                                               controllers.WebFoundation.root(mode="odb", version)
 HEAD   /odb/:version                                                               controllers.WebFoundation.root(mode="odb", version)
 
+# Wesby routes
+GET    /favicon.ico                                                                controllers.Assets.at(path="/public", file="favicon.ico")
+HEAD   /favicon.ico                                                                controllers.Assets.at(path="/public", file="favicon.ico")
+
+GET    /assets/*file                                                               controllers.Assets.at(path="/public", file)
+HEAD   /assets/*file                                                               controllers.Assets.at(path="/public", file)
+
 GET    /snorql                                                                     controllers.Application.snorql()
 HEAD   /snorql                                                                     controllers.Application.snorql()
+
+POST   /endpoint                                                                   controllers.Application.endpoint()
+HEAD   /endpoint                                                                   controllers.Application.endpoint()
 
 GET    /*path                                                                      controllers.Application.fallback(path: String)
 HEAD   /*path                                                                      controllers.Application.fallback(path: String)

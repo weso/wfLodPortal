@@ -1,21 +1,16 @@
 package es.weso.wfLodPortal.sparql.custom
 
-import scala.Array.canBuildFrom
 import scala.collection.mutable.HashMap
-import scala.collection.mutable.ListBuffer
 import scala.collection.mutable.{ Map => MutableMap }
-import com.hp.hpl.jena.query.QuerySolution
-import es.weso.wfLodPortal.Configurable
-import es.weso.wfLodPortal.sparql.QueryEngine
-import play.api.libs.functional.syntax.functionalCanBuildApplicative
-import play.api.libs.functional.syntax.toFunctionalBuilderOps
-import play.api.libs.functional.syntax.unlift
-import es.weso.wfLodPortal.utils._
-import es.weso.wfLodPortal.utils.UriFormatter._
-import es.weso.wfLodPortal.models.Uri
 
-object IndexValueCustomQuery  extends CustomQuery with Configurable {
-  case class Index(uri: Uri, name: String, rank: String, score: String, children: MutableMap[String, Index], colour1: String, colour2: String)
+import es.weso.wesby.Configurable
+import es.weso.wesby.models.Uri
+import es.weso.wesby.sparql.QueryEngine
+import es.weso.wesby.utils.UriFormatter
+
+object IndexValueCustomQuery extends CustomQuery with Configurable {
+  case class Index(uri: Uri, name: String, rank: String, score: String,
+    children: MutableMap[String, Index], colour1: String, colour2: String)
 
   val queryHierarchy = conf.getString("query.hierarchy")
   val queryValues = conf.getString("query.hierarchy.values")
@@ -57,7 +52,8 @@ object IndexValueCustomQuery  extends CustomQuery with Configurable {
       val ranking = if (rankings.contains(component)) rankings(component) else "0"
       val value = if (values.contains(component)) values(component) else "0"
 
-      val componentObject = Index(UriFormatter.format(component), componentLabel, ranking, value, HashMap.empty, "", "")
+      val componentObject = Index(UriFormatter.format(component), componentLabel,
+        ranking, value, HashMap.empty, "", "")
 
       val element = if (subindexes.contains(subindex)) {
         subindexes(subindex)
@@ -68,7 +64,8 @@ object IndexValueCustomQuery  extends CustomQuery with Configurable {
         val colour = colourPatterns(count)
         count += 1
 
-        val subindexObject = Index(UriFormatter.format(subindex), subindexLabel, ranking, value, HashMap.empty, colour._1, colour._2)
+        val subindexObject = Index(UriFormatter.format(subindex), subindexLabel,
+          ranking, value, HashMap.empty, colour._1, colour._2)
         subindexes += subindex -> subindexObject
         subindexObject
       }

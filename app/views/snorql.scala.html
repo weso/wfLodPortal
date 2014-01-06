@@ -1,12 +1,7 @@
 @(param: Any)(implicit request: RequestHeader)
-@import views.helpers.Utils._
-@import views.helpers.wf.Utils._
-@import views.html.helpers._
-@import views.html.helpers.utils._
-@import es.weso.wfLodPortal.models.Options
 @main(None, ""){
-<link rel="stylesheet" href="@routes.Assets.at("stylesheets/codemirror.css")"></link>
-<link rel="stylesheet" href="@routes.Assets.at("stylesheets/snorql.css")"></link>
+<link rel="stylesheet" href="@Options.host_r@routes.Assets.at("stylesheets/codemirror.css")"></link>
+<link rel="stylesheet" href="@Options.host_r@routes.Assets.at("stylesheets/snorql.css")"></link>
   <div class="snorql">
   	<nav class="breadcrumbs">
 		@hostLink(request) &gt; Snorql: A SPARQL Explorer
@@ -78,53 +73,36 @@
 
     <div id="footer">Powered by <a id="poweredby" href="#">Snorql</a></div>
   </div>
-  <script src="@routes.Assets.at("javascripts/snorql/prototype.js")"></script>
-  <script src="@routes.Assets.at("javascripts/snorql/scriptaculous/scriptaculous.js")"></script>
-  <script src="@routes.Assets.at("javascripts/snorql/sparql.js")"></script>
-  <script src="@routes.Assets.at("javascripts/snorql/snorql.js")"></script>
-  <script src="@routes.Assets.at("javascripts/codemirror/codemirror.js")"></script>
-  <script src="@routes.Assets.at("javascripts/codemirror/matchbrackets.js")"></script>
-  <script src="@routes.Assets.at("javascripts/codemirror/sparql.js")"></script>
+  <script src="@Options.host_r@routes.Assets.at("javascripts/snorql/prototype.js")"></script>
+  <script src="@Options.host_r@routes.Assets.at("javascripts/snorql/scriptaculous/scriptaculous.js")"></script>
+  <script src="@Options.host_r@routes.Assets.at("javascripts/snorql/sparql.js")"></script>
+  <script src="@Options.host_r@routes.Assets.at("javascripts/snorql/snorql.js")"></script>
+  <script src="@Options.host_r@routes.Assets.at("javascripts/snorql/namespaces.js")"></script>
+  <script>snorql.start(namespaces);</script>
+  <script src="@Options.host_r@routes.Assets.at("javascripts/codemirror/codemirror.js")"></script>
+  <script src="@Options.host_r@routes.Assets.at("javascripts/codemirror/matchbrackets.js")"></script>
+  <script src="@Options.host_r@routes.Assets.at("javascripts/codemirror/sparql.js")"></script>
   <script>
-			
-			var $j = jQuery.noConflict();
-
-			$j(document).ready(function() {
-			
-				$j.ajax({
-				    dataType: 'text',
-				    success: function(string) {
-				        
-				        data = $j.parseJSON(string);
-				        
-				        snorql.start(data);
-				        
-				        var editor = CodeMirror.fromTextArea(document.getElementById("querytext"), 
-							{
-							mode : "application/x-sparql-query",
-							tabMode : "indent",
-							lineNumbers : true,
-							matchBrackets : true
-							}
-						);
-						
-				    },
-				    url: '@routes.Assets.at("javascripts/snorql/namespaces.json")'
-				});
-				
-				$j("#submitQuery").click(function() {
-					editor.save();
-					snorql.submitQuery();
-				});
-
-				$j("#resetQuery").click(function() {
-					snorql.resetQuery();
-				});
-				
-				$j('html, body').animate({
-					scrollTop : $j("div.CodeMirror").offset().top
-				}, 2000);
-
-			});
-		</script>
+  	var editor = CodeMirror.fromTextArea(document.getElementById("querytext"), 
+  		  	{
+		  	mode : "application/x-sparql-query",
+		  	tabMode : "indent",
+		  	lineNumbers : true,
+		  	matchBrackets : true
+		  	}
+  	);
+	var $j = jQuery.noConflict();
+	$j(document).ready(function() {
+		$j('html, body').animate({
+			scrollTop : $j("div.CodeMirror").offset().top
+		}, 1500);
+		$j("#submitQuery").click(function() {
+			editor.save();
+			snorql.submitQuery();
+		});
+		$j("#resetQuery").click(function() {
+			snorql.resetQuery();
+		});
+	});
+	</script>
 }

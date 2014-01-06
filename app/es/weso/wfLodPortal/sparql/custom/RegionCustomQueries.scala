@@ -2,16 +2,17 @@ package es.weso.wfLodPortal.sparql.custom
 
 import scala.Option.option2Iterable
 
-import es.weso.wfLodPortal.Configurable
-import es.weso.wfLodPortal.models.Model
-import es.weso.wfLodPortal.models.RdfResource
-import es.weso.wfLodPortal.sparql.Handlers.handleFirstLiteralAsValue
-import es.weso.wfLodPortal.sparql.Handlers.handleResourceAs
-import es.weso.wfLodPortal.sparql.ModelLoader
-import es.weso.wfLodPortal.utils.CommonURIS.rdf
-import es.weso.wfLodPortal.utils.CommonURIS.wfOnto
-import es.weso.wfLodPortal.models.Uri
-import es.weso.wfLodPortal.models.Uri._
+import es.weso.wesby.Configurable
+import es.weso.wesby.models.Model
+import es.weso.wesby.models.RdfResource
+import es.weso.wesby.sparql.Handlers.handleFirstLiteralAsValue
+import es.weso.wesby.sparql.Handlers.handleResourceAs
+import es.weso.wesby.sparql.ModelLoader
+import es.weso.wesby.utils.CommonURIS.rdf
+import es.weso.wesby.utils.CommonURIS.wfOnto
+import es.weso.wesby.models.Uri
+import es.weso.wesby.models.Uri._
+
 import play.api.libs.functional.syntax.functionalCanBuildApplicative
 import play.api.libs.functional.syntax.toFunctionalBuilderOps
 import play.api.libs.functional.syntax.unlift
@@ -19,7 +20,7 @@ import play.api.libs.json.__
 import play.api.libs.json.Json
 import play.api.libs.json.Reads
 import play.api.libs.json.Writes
-import views.helpers.Utils
+import views.helpers.utils.Utils
 
 object RegionCustomQueries extends CustomQuery with Configurable {
 

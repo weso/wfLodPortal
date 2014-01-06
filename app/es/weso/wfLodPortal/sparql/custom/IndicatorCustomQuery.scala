@@ -3,21 +3,15 @@ package es.weso.wfLodPortal.sparql.custom
 import scala.Array.canBuildFrom
 import scala.collection.mutable.HashMap
 import scala.collection.mutable.ListBuffer
-import scala.collection.mutable.{ Map => MutableMap }
-
+import scala.collection.mutable.{Map => MutableMap}
 import com.hp.hpl.jena.query.QuerySolution
-
-import es.weso.wfLodPortal.Configurable
-import es.weso.wfLodPortal.models.Uri
-import es.weso.wfLodPortal.sparql.QueryEngine
-import es.weso.wfLodPortal.utils.UriFormatter
+import es.weso.wesby.Configurable
+import es.weso.wesby.models.Uri
+import es.weso.wesby.sparql.QueryEngine
+import es.weso.wesby.utils.UriFormatter
 import play.api.libs.functional.syntax.functionalCanBuildApplicative
 import play.api.libs.functional.syntax.toFunctionalBuilderOps
-import play.api.libs.functional.syntax.unlift
-import play.api.libs.json.__
 import play.api.libs.json.Json
-import play.api.libs.json.Reads
-import play.api.libs.json.Writes
 
 object IndicatorCustomQuery extends CustomQuery with Configurable {
   case class Indicator(val uri: Uri, val code: String, var description: String, observations: ListBuffer[Observation])

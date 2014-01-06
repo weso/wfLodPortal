@@ -2,9 +2,9 @@ package es.weso.wfLodPortal.sparql.custom
 
 import scala.collection.mutable.ListBuffer
 
-import es.weso.wfLodPortal.Configurable
-import es.weso.wfLodPortal.sparql.QueryEngine
-import es.weso.wfLodPortal.utils.UriFormatter
+import es.weso.wesby.Configurable
+import es.weso.wesby.sparql.QueryEngine
+import es.weso.wesby.utils.UriFormatter
 
 object ObservationCustomQuery extends CustomQuery with Configurable {
   

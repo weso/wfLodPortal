@@ -1,11 +1,14 @@
-package es.weso.wfLodPortal.utils
+package es.weso.wesby.utils
 
-import es.weso.wfLodPortal.Configurable
+import es.weso.wesby.Configurable
 
+/**
+ * Contains the commons URIs used in the project
+ */
 object CommonURIS extends Configurable {
 
   /*
-   * Place here the commons uris used by your project's custom views.
+   * Place here the commons URIs used by your project's custom views.
    * 
    * As a piece of advise, load the prefixes from conf/prefixes.ttl with
    * the helper UriFormatter.
@@ -44,8 +47,8 @@ object CommonURIS extends Configurable {
   val wfPeople = UriFormatter.namespaces.get("wf-people").get
   val wiComponent = UriFormatter.namespaces.get("wi-component").get
   val wiComputation = UriFormatter.namespaces.get("wi-computation").get
-  val wiCountry = UriFormatter.namespaces.get("wi-country")
-  val wiDataset = UriFormatter.namespaces.get("wi-dataset")
+  val wiCountry = UriFormatter.namespaces.get("wi-country").get
+  val wiDataset = UriFormatter.namespaces.get("wi-dataset").get
   val wiIndex = UriFormatter.namespaces.get("wi-index").get
   val wiIndicator = UriFormatter.namespaces.get("wi-indicator").get
   val wiObs = UriFormatter.namespaces.get("wi-obs").get

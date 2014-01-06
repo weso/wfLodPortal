@@ -1,7 +1,7 @@
 @(version: String, mode: String)(implicit request: RequestHeader, regions:play.api.libs.json.JsValue, years: play.api.libs.json.JsValue, subindexes:play.api.libs.json.JsValue, selectedCountries: Option[String], selectedIndicators: Option[String], maxCountries: String, maxIndicators: String, maxYears: String)
 
 @import views.html.helpers._
-@import es.weso.wfLodPortal.models.Options
+@import es.weso.wesby.models.Options
 
 @href = @{
 	routes.WebFoundation.root(mode, version)

@@ -1,12 +1,5 @@
-@(rs: es.weso.wfLodPortal.models.ResultQuery)(implicit request:RequestHeader, options:es.weso.wfLodPortal.models.Options)
+@(rs: ResultQuery)(implicit request:RequestHeader, options:Options)
 
-@import es.weso.wfLodPortal.sparql.Handlers._
-@import es.weso.wfLodPortal.utils.CommonURIS._
-@import es.weso.wfLodPortal.models._
-@import views.helpers.Utils._
-@import views.helpers.wf.Utils._
-@import views.html.helpers._
-@import views.html.helpers.utils._
 @import scala.collection.mutable.ListBuffer
 @import es.weso.wfLodPortal.sparql.custom.ObservationCustomQuery.Observation
 

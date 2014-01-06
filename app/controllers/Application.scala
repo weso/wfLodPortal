@@ -1,19 +1,21 @@
 package controllers
-
 import java.io.ByteArrayOutputStream
 import java.nio.charset.Charset
 import java.nio.charset.CodingErrorAction
-
 import com.hp.hpl.jena.rdf.model.{ Model => JenaModel }
 import com.hp.hpl.jena.rdf.model.ModelFactory
-
-import es.weso.wfLodPortal.TemplateEgine
-import es.weso.wfLodPortal.sparql.ModelLoader
+import es.weso.wesby.TemplateEgine
+import es.weso.wesby.sparql.ModelLoader
 import play.api.mvc.Accepting
 import play.api.mvc.Action
 import play.api.mvc.Controller
 import play.api.mvc.RequestHeader
+import play.api.libs.ws.WS
+import play.api.libs.json.Json
 
+/**
+ * Wesby's Controllers which Handles the different Web Services.
+ */
 object Application extends Controller with TemplateEgine {
 
   val Html = Accepting("text/html")
@@ -30,18 +32,54 @@ object Application extends Controller with TemplateEgine {
   charsetDecoder.onMalformedInput(CodingErrorAction.REPLACE);
   charsetDecoder.onUnmappableCharacter(CodingErrorAction.REPLACE);
 
-  def index = Action {
-    implicit request => Ok(views.html.custom.home(currentVersion))
+  implicit val context = scala.concurrent.ExecutionContext.Implicits.global
+
+  val endpointPath = conf.getString("sparql.endpoint")
+
+  /**
+   * Redirects to the default page.
+   */
+  def index() = Action {
+    implicit request =>
+      /*val default = conf.getString("sparql.index")
+      Redirect(default)*/
+      Ok(views.html.custom.home(WebFoundation.currentVersion))
   }
 
+  /**
+   * Renders the built-in Snorql
+   */
   def snorql() = Action {
     implicit request => Ok(views.html.snorql())
   }
 
-  def redirect(to: String) = Action {
-    Redirect(to)
+  /**
+   * Proxies the endpoint in order to be able to query it avoiding
+   * cross domain limitations. 
+   */
+  def endpoint() = Action.async {
+    implicit request =>
+      val params = request.body.asFormUrlEncoded.get
+      var nMap = Map.empty[String,Seq[String]]
+      nMap += "output" -> Seq("json")
+      nMap += "query" -> Seq(params("query").head.replace("[object Object]", ""))
+      WS.url(endpointPath).post(nMap).map { response =>
+        Ok(response.body).as("application/json; charset=UTF8")
+      }
   }
 
+  /**
+   * Performs a redirect to the supplied URI
+   * @param to the URI to be redirected
+   */
+  def redirect(to: String) = Action {
+    implicit request => Redirect(to)
+  }
+
+  /**
+   * Intercepts the partial URI and renders the result
+   * @param uri the supplied partial URI
+   */
   def fallback(uri: String) = Action {
     implicit request =>
       val resultQuery = ModelLoader.loadUri(uri)
@@ -74,6 +112,13 @@ object Application extends Controller with TemplateEgine {
       }
   }
 
+  /**
+   * Download the resource in a given format
+   * @param uri the supplied URI
+   * @param format the format to be downloaded
+   * @param models the models to be merged
+   * @param request the implicit request
+   */
   protected def downloadAs(uri: String, format: String, models: Seq[JenaModel])(implicit request: RequestHeader) = {
     format match {
       case "n3" =>
@@ -90,6 +135,12 @@ object Application extends Controller with TemplateEgine {
     }
   }
 
+  /**
+   * Merges the models and renders it in the supplied contentType.
+   * @param models the models to be rendered
+   * @param contentType the target content type
+   * @param request the implicit request
+   */
   protected def renderModelsAs(models: Seq[JenaModel], contentType: (String, String, String))(implicit request: RequestHeader) = {
     val out = new ByteArrayOutputStream
     val mergedModel: JenaModel = ModelFactory.createDefaultModel

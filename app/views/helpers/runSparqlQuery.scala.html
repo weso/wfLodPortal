@@ -1,6 +1,5 @@
-@(endpoint:String, query:String)(implicit request:RequestHeader)
+@(endpoint:String, query:String)(implicit request: RequestHeader)
 @import scala.util.Random
-@import views.html.helpers._
 @randomString = @{Random.alphanumeric.take(10).mkString}
 @defining(randomString) { randomString =>
 	<link rel="stylesheet" href="@routes.Assets.at("stylesheets/codemirror.css")"/>
